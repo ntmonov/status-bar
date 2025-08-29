@@ -177,11 +177,12 @@ public class StatusBar {
     private void setStatusBarColor(int color) {
         Window window = activity.getWindow();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-            View decorView = window.getDecorView();
-            decorView.setBackgroundColor(color);
-        } else {
-            window.setStatusBarColor(color);
-        }
+        // Ensure system windows are drawn separately
+        WindowCompat.setDecorFitsSystemWindows(window, true);
+        window.setStatusBarColor(color);
+    } else {
+        window.setStatusBarColor(color);
+    }
     }
 
     public interface ChangeListener {
